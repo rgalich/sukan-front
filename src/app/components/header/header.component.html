@@ -1,0 +1,21 @@
+<nz-header class="app-header">
+    <div nz-row [nzGutter]="[10, 0]" nzJustify="start">
+      <div nz-col class="gutter-row sidebar-logo" [nzXs]="24" [nzMd]="24" [nzXl]="5">
+        <a>
+          <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+          <h1>Sukan.fr</h1>
+        </a>
+      </div>
+      <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="12" [nzXl]="8">
+        <nz-select [(ngModel)]="dateSelected" (ngModelChange)="dateChange()" [nzSize]="'large'">
+          <nz-option *ngFor="let date of dates" [nzValue]="date" [nzLabel]="date | date:'dd-MM-yyyy'"></nz-option>
+        </nz-select>
+      </div>
+      <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="12" [nzXl]="8">
+        <nz-select [(ngModel)]="sportSelected" (ngModelChange)="sportChange()" [nzSize]="'large'" [nzCustomTemplate]="sportSelectedTemplate">
+          <nz-option *ngFor="let sport of sports" nzCustomContent [nzValue]="sport">{{ sport.libelle }} <span class="badge">{{ sport.eventNumber || 0 }}</span></nz-option>
+          <ng-template #sportSelectedTemplate let-selected>{{ selected.nzValue.libelle }} <span class="badge">{{ selected.nzValue.eventNumber || 0 }}</span></ng-template>
+        </nz-select>
+      </div>
+    </div>
+</nz-header>

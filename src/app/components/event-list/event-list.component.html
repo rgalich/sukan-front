@@ -1,0 +1,4 @@
+<div nz-row [nzGutter]="[10, 10]">
+    <app-event-card *ngFor="let event of events" nz-col [nzXs]="24" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="6" [event]="event"></app-event-card>
+</div>
+<nz-empty *ngIf="!events?.length"></nz-empty>

@@ -1,0 +1,13 @@
+<nz-card [nzTitle]="titleTemplate">
+    <nz-card-meta [nzTitle]="event.libelle" [nzDescription]="event.sport?.libelle"></nz-card-meta>
+    <nz-card-meta [nzDescription]="event.subLibelle"></nz-card-meta>
+    <nz-divider nzText="Chaîne(s)"></nz-divider>
+    <div nz-row [nzGutter]="[5, 5]" nzJustify="center">
+        <div *ngFor="let channel of event.channels" nz-col class="gutter-row" [nzSpan]="24"><nz-tag [nzColor]="'#87d068'">{{ channel.libelle | uppercase }}</nz-tag></div>
+    </div>
+</nz-card>
+
+<ng-template #titleTemplate>
+    <i nz-icon nzType="clock-circle" style="font-size: 24px;" nzTheme="twotone"></i>
+    {{ event.dateTime | date:'HH:mm' }}
+</ng-template>
