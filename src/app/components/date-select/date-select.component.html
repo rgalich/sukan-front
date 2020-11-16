@@ -1,0 +1,3 @@
+<nz-select [(ngModel)]="dateSelected" (ngModelChange)="dateChange()" [nzSize]="'large'">
+    <nz-option *ngFor="let date of dates" [nzValue]="date" [nzLabel]="date | date:'dd-MM-yyyy'"></nz-option>
+</nz-select>

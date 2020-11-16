@@ -4,6 +4,8 @@ import { Apollo, gql } from 'apollo-angular';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { Sport } from 'src/app/models/sport';
+import { DateService } from '../date/date.service';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,12 @@ import { Sport } from 'src/app/models/sport';
 export class SportService implements OnDestroy {
   dateSelectedSubscription: Subscription;
 
-  constructor(private readonly apollo: Apollo) {
-    this.dateSelectedSubscription = this.dateSelected
+  constructor(private readonly apollo: Apollo, private readonly dateService: DateService) {
+    this.dateSelectedSubscription = this.dateService.dateSelected
     .pipe(
       filter((date) => date !== null),
       switchMap(date => {
-        return this.getSports(date);
+        return this.getSports(moment(date).format('YYYY-MM-DD'));
       }),
     )
     .subscribe((response) => {
@@ -30,10 +32,9 @@ export class SportService implements OnDestroy {
       sports.push.apply(sports, sportsData);
       this.sports.next(sports);
       this.sportSelected.next(sports[0]);
-    })
+    });
    }
 
-  dateSelected: BehaviorSubject<string> = new BehaviorSubject(null);
   sportSelected: BehaviorSubject<Sport> = new BehaviorSubject(null);
   sports: BehaviorSubject<Sport[]> = new BehaviorSubject(null);
 

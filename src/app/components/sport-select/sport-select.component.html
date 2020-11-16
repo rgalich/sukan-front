@@ -1,0 +1,4 @@
+<nz-select [(ngModel)]="sportSelected" (ngModelChange)="sportChange()" [nzSize]="'large'" [nzCustomTemplate]="sportSelectedTemplate">
+    <nz-option *ngFor="let sport of sports" nzCustomContent [nzValue]="sport">{{ sport.libelle }} <span class="badge">{{ sport.eventNumber || 0 }}</span></nz-option>
+    <ng-template #sportSelectedTemplate let-selected>{{ selected.nzValue.libelle }} <span class="badge">{{ selected.nzValue.eventNumber || 0 }}</span></ng-template>
+</nz-select>

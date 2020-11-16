@@ -26,6 +26,13 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { GraphQLModule } from './graphql.module';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { DateSelectComponent } from './components/date-select/date-select.component';
+import { SportSelectComponent } from './components/sport-select/sport-select.component';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { BroadcastSelectComponent } from './components/broadcast-select/broadcast-select.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 registerLocaleData(fr);
 
@@ -35,6 +42,10 @@ registerLocaleData(fr);
     HeaderComponent,
     EventListComponent,
     EventCardComponent,
+    DateSelectComponent,
+    SportSelectComponent,
+    BroadcastSelectComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,11 +54,14 @@ registerLocaleData(fr);
     IconsProviderModule,
     NzLayoutModule,
     NzMenuModule,
+    NzRadioModule,
     NzSelectModule,
+    NzToolTipModule,
     NzDividerModule,
     NzGridModule,
     NzBadgeModule,
     NzCardModule,
+    NzAffixModule,
     NzEmptyModule,
     NzTagModule,
     FormsModule,

@@ -1,8 +1,11 @@
 <nz-layout class="app-layout">
   <app-header></app-header>
-  <nz-content [ngClass]="{'xs-content': width < 768, 'md-content': width >= 768 && width < 1200 }">
-    <div class="inner-content">
-      <router-outlet></router-outlet>
+  <nz-content>
+    <div nz-row [nzGutter]="[50, 10]" class="inner-content">
+      <app-menu *ngIf="width >= 992 " nz-col [nzXs]="24" [nzMd]="24" [nzLg]="8" [nzXl]="6" [nzXXl]="5"></app-menu>
+      <div class="router" nz-col [nzXs]="24" [nzMd]="24" [nzLg]="16" [nzXl]="18" [nzXXl]="19">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </nz-content>
   <nz-footer>Sukan.fr ©2020 Programme TV Foot & Multisports</nz-footer>
