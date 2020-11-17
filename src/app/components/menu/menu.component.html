@@ -1,15 +1,19 @@
-<div class="menu">
-    <nz-affix [nzOffsetTop]="10">
-        <ul nz-menu nzMode="inline">
-          <li>
-            <app-date-select></app-date-select>
-          </li>
-          <li>
-            <app-sport-select></app-sport-select>
-          </li>
-          <li>
-            <app-broadcast-select></app-broadcast-select>
-          </li>
+<nz-affix [nzOffsetTop]="2">
+    <ul class="menu" nz-menu nzMode="inline">
+      <li>
+        <app-date-select></app-date-select>
+      </li>
+      <li>
+        <app-sport-select></app-sport-select>
+      </li>
+      <li>
+        <app-broadcast-select></app-broadcast-select>
+      </li>
+      <li nz-menu-group nzTitle="Chaînes">
+        <ul>
+          <li *ngFor="let channel of channels" nz-menu-item [nzSelected]="channel === channelSelected" (click)="changeChannel(channel)">{{ channel.libelle }} <span class="badge-red">{{ channel.eventDirectNumber }}</span><span class="badge-green">{{ channel.eventRediffusionNumber }}</span></li>
         </ul>
-    </nz-affix>
-</div>
+      </li>
+    </ul>
+</nz-affix>
+

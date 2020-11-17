@@ -10,6 +10,8 @@ import { DateService } from '../date/date.service';
 import moment from 'moment';
 import { BroadcastService } from '../broadcast/broadcast.service';
 import { Broadcast } from 'src/app/models/broadcast';
+import { ChannelService } from '../channel/channel.service';
+import { Channel } from 'src/app/models/channel';
 
 @Injectable({
   providedIn: 'root'
@@ -20,24 +22,25 @@ export class EventService {
     private readonly apollo: Apollo,
     private readonly sportService: SportService,
     private readonly dateService: DateService,
+    private readonly channelService: ChannelService,
     private readonly broadcastService: BroadcastService,
   ) {
-    this.sportService.sportSelected
+    this.channelService.channelSelected
     .pipe(
-      filter((sportSelected) => sportSelected !== null && this.dateService.dateSelected.value !== null),
-      switchMap(sportSelected => {
-        return this.getEvents(moment(this.dateService.dateSelected.value).format('YYYY-MM-DD'), sportSelected, this.broadcastService.broadcastSelected.value);
+      filter((channelSelected) => channelSelected !== null && this.dateService.dateSelected.value !== null && this.sportService.sportSelected.value !== null),
+      switchMap(channelSelected => {
+        return this.getEvents(moment(this.dateService.dateSelected.value).format('YYYY-MM-DD'), this.sportService.sportSelected.value, this.broadcastService.broadcastSelected.value, channelSelected);
       }),
     )
     .subscribe((response) => {
-      this.events.next(response.data.event.map((event) => Event.fromData(event)))
+      this.events.next(response.data.event.map((event) => Event.fromData(event)));
     });
 
     this.broadcastService.broadcastSelected
     .pipe(
-      filter(() =>  this.sportService.sportSelected.value !== null && this.dateService.dateSelected.value !== null),
+      filter(() =>  this.sportService.sportSelected.value !== null && this.dateService.dateSelected.value !== null && this.channelService.channelSelected.value != null),
       switchMap(broadcastSelected => {
-        return this.getEvents(moment(this.dateService.dateSelected.value).format('YYYY-MM-DD'), this.sportService.sportSelected.value, broadcastSelected);
+        return this.getEvents(moment(this.dateService.dateSelected.value).format('YYYY-MM-DD'), this.sportService.sportSelected.value, broadcastSelected, this.channelService.channelSelected.value);
       }),
     )
     .subscribe((response) => {
@@ -47,15 +50,16 @@ export class EventService {
 
   events: BehaviorSubject<Event[]> = new BehaviorSubject(null);
 
-  getEvents(date: string, sport: Sport, broadcast: Broadcast): Observable<ApolloQueryResult<any>> {
+  getEvents(date: string, sport: Sport, broadcast: Broadcast, channel: Channel): Observable<ApolloQueryResult<any>> {
     const broadcastQuery = broadcast !== Broadcast.ALL ? broadcast : null;
 
     const GET_EVENTS = gql`
-      query getEvents($date: timestamp! $sportId: Int $broadcast: broadcast_enum) {
+      query getEvents($date: timestamp! $sportId: Int $broadcast: broadcast_enum $channelId: Int) {
         event(
           where: {
             date: {_eq: $date}
             sport_id: {_eq: $sportId}
+            event_channels: {channel_id: {_eq: $channelId}}
             broadcast: {_eq: $broadcast}
           }
           order_by: {dateTime: asc}
@@ -88,6 +92,7 @@ export class EventService {
           date,
           sportId: sport.id,
           broadcast: broadcastQuery,
+          channelId: channel.id,
         }
       })
       .valueChanges;

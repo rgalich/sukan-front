@@ -1,7 +1,7 @@
 <nz-layout class="app-layout">
   <app-header></app-header>
   <nz-content>
-    <div nz-row [nzGutter]="[50, 10]" class="inner-content">
+    <div nz-row class="inner-content">
       <app-menu *ngIf="width >= 992 " nz-col [nzXs]="24" [nzMd]="24" [nzLg]="8" [nzXl]="6" [nzXXl]="5"></app-menu>
       <div class="router" nz-col [nzXs]="24" [nzMd]="24" [nzLg]="16" [nzXl]="18" [nzXXl]="19">
         <router-outlet></router-outlet>
