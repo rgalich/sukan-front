@@ -1,8 +1,15 @@
 <nz-layout class="app-layout">
   <app-header></app-header>
+  <nz-affix *ngIf="width < 992" [nzOffsetTop]="80">
+    <button [ngClass]="{'button-left': visible}" nz-button nzType="text" [nzSize]="'large'" (click)="toogle()">
+      <i *ngIf="!visible" nz-icon nzType="menu"></i>
+      <i *ngIf="visible" nz-icon nzType="close"></i>
+    </button>
+  </nz-affix>
+  <app-drawer *ngIf="width < 992"></app-drawer>
   <nz-content>
     <div nz-row class="inner-content">
-      <app-menu *ngIf="width >= 992 " nz-col [nzXs]="24" [nzMd]="24" [nzLg]="8" [nzXl]="6" [nzXXl]="5"></app-menu>
+      <app-menu *ngIf="width >= 992" nz-col [nzXs]="24" [nzMd]="24" [nzLg]="8" [nzXl]="6" [nzXXl]="5"></app-menu>
       <div class="router" nz-col [nzXs]="24" [nzMd]="24" [nzLg]="16" [nzXl]="18" [nzXXl]="19">
         <router-outlet></router-outlet>
       </div>

@@ -73,10 +73,6 @@ export class EventService {
             id
             libelle
           }
-          competition {
-            id
-            libelle
-          }
           event_channels {
             channel {
               id

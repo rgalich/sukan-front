@@ -1,6 +1,5 @@
 import { Broadcast } from './broadcast';
 import { Channel } from "./channel";
-import { Competition } from "./competition";
 import { Sport } from "./sport";
 
 export class Event {
@@ -10,7 +9,6 @@ export class Event {
     dateTime: string;
     date: string;
     sport: Sport;
-    competition: Competition;
     broadcast: Broadcast;
     channels: Channel[] = [];
 
@@ -23,7 +21,6 @@ export class Event {
         event.date = data.date;
         event.broadcast = data.broadcast;
         event.sport = data.sport ? Sport.fromData(data.sport) : null;
-        event.competition = data.competition ? Competition.fromData(data.competition) : null;
         event.channels = data.event_channels?.map(eventChannel => Channel.fromData(eventChannel.channel));
 
         return event;

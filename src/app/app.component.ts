@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DrawerService } from './services/drawer/drawer.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   isCollapsed = false;
+  visible = false;
+
+  constructor(private readonly drawerService: DrawerService) {
+    this.drawerService.visible.subscribe(visible => this.visible = visible);
+  }
 
   get width() {
     return window.innerWidth;
+  }
+
+  toogle() {
+    this.drawerService.visible.next(!this.drawerService.visible.value);
   }
 }

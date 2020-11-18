@@ -31,7 +31,19 @@ export class SportService implements OnDestroy {
       sports.push({ libelle: 'Tous les sports', eventNumber: eventSum } as Sport)
       sports.push.apply(sports, sportsData);
       this.sports.next(sports);
-      this.sportSelected.next(sports[0]);
+
+      let currentSportSelected: Sport = null;
+      if (!this.sportSelected.value) {
+        currentSportSelected = sports[0];
+      } else {
+        currentSportSelected = sports.find(sport => sport.id === this.sportSelected.value.id);
+        if (!currentSportSelected) {
+          currentSportSelected = this.sportSelected.value;
+          currentSportSelected.eventNumber = 0;
+        }
+      }
+
+      this.sportSelected.next(currentSportSelected);
     });
    }
 
@@ -53,6 +65,7 @@ export class SportService implements OnDestroy {
       }`;
 
       return this.apollo.watchQuery<any>({
+        fetchPolicy: 'no-cache',
         query: GET_SPORTS,
         variables: {
           date

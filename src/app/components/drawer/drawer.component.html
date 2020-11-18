@@ -1,0 +1,18 @@
+<nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="left" [nzBodyStyle]="{ padding: '2px' }">
+    <ul class="menu" nz-menu nzMode="inline">
+        <li>
+          <app-date-select></app-date-select>
+        </li>
+        <li>
+          <app-sport-select></app-sport-select>
+        </li>
+        <li>
+          <app-broadcast-select></app-broadcast-select>
+        </li>
+        <li nz-menu-group nzTitle="Chaînes">
+          <ul>
+            <li *ngFor="let channel of channels" nz-menu-item [nzSelected]="channel === channelSelected" (click)="changeChannel(channel)">{{ channel.libelle }} <span class="badge-red">{{ channel.eventDirectNumber }}</span><span class="badge-green">{{ channel.eventRediffusionNumber }}</span></li>
+          </ul>
+        </li>
+    </ul>
+</nz-drawer>
